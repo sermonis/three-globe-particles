@@ -9,6 +9,7 @@ class Globe {
 		groups.globe.name = 'Globe';
 
 		this.initGlobe();
+		// this.initAtmosphere();
 
 		return groups.globe;
 
@@ -51,7 +52,7 @@ class Globe {
 
 	createGlobeMaterial () {
 
-		const texture = loader.load( './assets/textures/earth_dark.jpg' );		
+		const texture = loader.load( './assets/textures/earth_dark.jpg' );
 
 		const shaderMaterial = new THREE.ShaderMaterial( {
 

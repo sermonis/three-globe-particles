@@ -88,7 +88,7 @@ function setup ( app ) {
 	app.controls.dampingFactor = 0.05;
 	app.controls.rotateSpeed = 0.07;
 
-	// console.log( 'groups', groups );
+	console.log( 'groups', groups );
 
 	groups.main = new THREE.Group();
 	groups.main.name = 'Main';
@@ -104,6 +104,9 @@ function setup ( app ) {
 
 	const lines = new Lines();
 	groups.globe.add( groups.lines );
+
+	const geojson = new GeoJSON( data.geojson );
+	groups.globe.add( groups.geojson );
 
 	app.scene.add( groups.main );
 
