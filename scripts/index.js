@@ -59,6 +59,7 @@ function setup ( app ) {
 
 		controllers.push( displayFolder.add( config.display, 'map' ) );
 	    controllers.push( displayFolder.add( config.display, 'points' ) );
+	    controllers.push( displayFolder.add( config.display, 'contours' ) );
 	    controllers.push( displayFolder.add( config.display, 'markers' ) );
 	    controllers.push( displayFolder.add( config.display, 'markerLabel' ) );
 	    controllers.push( displayFolder.add( config.display, 'markerPoint' ) );
@@ -105,8 +106,8 @@ function setup ( app ) {
 	const lines = new Lines();
 	groups.globe.add( groups.lines );
 
-	const geojson = new GeoJSON( data.geojson );
-	groups.globe.add( groups.geojson );
+	const contours = new GeoJSON( data.geojson );
+	groups.globe.add( groups.contours );
 
 	app.scene.add( groups.main );
 
@@ -148,6 +149,7 @@ function animate ( app ) {
 	    groups.map.visible = config.display.map;
 	    groups.markers.visible = config.display.markers;
 	    groups.points.visible = config.display.points;
+	    groups.contours.visible = config.display.contours;
 
 		for ( let i = 0; i < elements.markerLabel.length; i++ ) {
 

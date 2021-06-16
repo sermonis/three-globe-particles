@@ -1,11 +1,12 @@
-function toSphereCoordinates ( lat, lng, scale ) {
+// https://github.com/sermonis/three-geojson-geometry/blob/master/src/index.js#L167
+function toSphereCoordinates ( lat, lng, radius ) {
 
-	var phi = ( 90 - lat ) * Math.PI / 180;
-	var theta = ( 180 - lng ) * Math.PI / 180;
+	const phi = ( 90 - lat ) * Math.PI / 180;
+	const theta = ( 180 - lng ) * Math.PI / 180;
 
-	var x = scale * Math.sin( phi ) * Math.cos( theta );
-	var y = scale * Math.cos( phi );
-	var z = scale * Math.sin( phi ) * Math.sin( theta );
+	const x = radius * Math.sin( phi ) * Math.cos( theta );
+	const y = radius * Math.cos( phi );
+	const z = radius * Math.sin( phi ) * Math.sin( theta );
 
 	return { x, y, z };
 
@@ -82,14 +83,8 @@ function clamp ( num, min, max ) {
 
 function coordinateToPosition ( lat, lng, radius ) {
 
-	var phi = ( 90 - lat ) * Math.PI / 180;
-	var theta = ( 180 - lng ) * Math.PI / 180;
-
-	return new THREE.Vector3(
-		- radius * Math.sin( phi ) * Math.cos( theta ),
-		radius * Math.cos( phi ),
-		- radius * Math.sin( phi ) * Math.sin( theta )
-	);
+	const { x, y, z } = toSphereCoordinates( lat, lng, radius );
+	return new THREE.Vector3( x, y, z );
 
 }
 

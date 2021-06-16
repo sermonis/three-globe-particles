@@ -6,12 +6,14 @@ class GeoJSON {
 		this.radius = config.sizes.globe;
 
 		//
-		groups.geojson = new THREE.Group();
-		groups.geojson.name = 'geoJSON';
+		groups.contours = new THREE.Group();
+		groups.contours.name = 'geoJSON';
+		// groups.geojson.rotateY( THREE.Math.degToRad( -90 ) );
+		groups.contours.rotateY( THREE.Math.degToRad( 90 ) );
 		//
 		this.initGeoJson();
 
-		return groups.geojson;
+		return groups.contours;
 
 	}
 
@@ -35,7 +37,8 @@ class GeoJSON {
 		// );
 
 		// https://github.com/sermonis/three-geojson-geometry
-		const alt = this.radius;
+		// https://github.com/sermonis/three-geojson-geometry/blob/master/src/index.js
+		// const alt = this.radius;
 
 		const lineObjs = [
 	      // new THREE.LineSegments(
@@ -45,19 +48,32 @@ class GeoJSON {
 	      // )
 	    ];
 
-	    const materials = [
-	      new THREE.LineBasicMaterial({ color: 'blue' }), // outer ring
-	      new THREE.LineBasicMaterial({ color: 'green' }) // inner holes
-	    ];
+		const materials = [
 
-	    this.json.features.forEach(({ properties, geometry }) => {
-	      lineObjs.push(new THREE.LineSegments(
-	        new THREE.GeoJsonGeometry(geometry, alt),
-	        materials
-	      ))
-	    });
+			// new THREE.LineBasicMaterial( { color: 'blue', linewidth: 3, } ), // outer ring
+			new THREE.LineBasicMaterial( { color: 0xffaa00, linewidth: 3, } ), // outer ring
+			// new THREE.LineDashedMaterial( { color: 0xffaa00, dashSize: 3, gapSize: 1 } ), // outer ring
+			new THREE.LineBasicMaterial( { color: 'green', linewidth: 3, } ), // inner holes
 
-		lineObjs.forEach(obj => groups.geojson.add(obj));
+		];
+
+		this.json.features.forEach( ( { properties, geometry } ) => {
+
+			lineObjs.push(new THREE.LineSegments(
+				new THREE.GeoJsonGeometry( geometry, this.radius ),
+				materials
+			) );
+
+		} );
+
+		lineObjs.forEach( obj => groups.contours.add( obj ) );
+		// lineObjs.forEach( obj => {
+		//
+		// 	// obj.rotateY( THREE.Math.degToRad( -90 ) );
+		// 	// obj.computeLineDistances();
+		// 	groups.geojson.add( obj );
+		//
+		// } );
 
 	}
 

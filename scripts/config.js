@@ -41,6 +41,7 @@ const config = {
 	display: {
 
 		points: true,
+		contours: true,
 		map: true,
 		lines: true,
 		markers: true,
@@ -62,6 +63,7 @@ const elements = {
 	globe: null,
 	atmosphere: null,
 	globePoints: null,
+	globeСontours: null,
 	lineDots: [],
 	markers: [],
 	markerLabel: [],
@@ -84,6 +86,7 @@ const groups = {
 	lines: null,
 	points: null,
 	markers: null,
+	contours: null,
 	atmosphere: null,
 	lineDots: null,
 

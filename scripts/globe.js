@@ -4,12 +4,13 @@ class Globe {
 
 		this.radius = config.sizes.globe;
 		this.geometry = new THREE.SphereGeometry( this.radius, 64, 64 );
+		// this.geometry.rotateY( THREE.Math.degToRad( -90 ) );
 
 		groups.globe = new THREE.Group();
 		groups.globe.name = 'Globe';
 
 		this.initGlobe();
-		// this.initAtmosphere();
+		this.initAtmosphere();
 
 		return groups.globe;
 
@@ -22,6 +23,8 @@ class Globe {
 		this.globeMaterial = this.createGlobeMaterial();
 
 		this.globe = new THREE.Mesh( this.geometry, this.globeMaterial );
+		// this.globe.rotateY( THREE.Math.degToRad( -90 ) );
+
 		this.globe.scale.set( scale, scale, scale );
 
 		elements.globe = this.globe;
