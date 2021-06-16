@@ -66,7 +66,7 @@ function setup ( app ) {
 
 	    const animationsFolder = gui.addFolder( 'Animations' );
 
-		controllers.push(animationsFolder.add( animations, 'rotateGlobe' ) );
+		controllers.push( animationsFolder.add( animations, 'rotateGlobe' ) );
 
 	    sizeFolder.open();
 
@@ -74,7 +74,7 @@ function setup ( app ) {
 
 	controllers.forEach( controller => {
 
-		controller.onChange( ( event ) => {
+		controller.onChange( event => {
 
 			controls.changed = true;
 
@@ -112,7 +112,6 @@ function setup ( app ) {
 	app.scene.add( groups.main );
 
 }
-
 
 function animate ( app ) {
 

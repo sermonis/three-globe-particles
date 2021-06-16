@@ -37,14 +37,13 @@ class App {
 
 	initRenderer = () => {
 
-		this.renderer = new THREE.WebGLRenderer( { alpha: true } );
+		this.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
 
 		this.renderer.setClearColor( 0x000000, 1.0 );
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
 		this.renderer.setPixelRatio( window.devicePixelRatio * 1.5 );
 
 		this.renderer.shadowMap.enabled = true;
-		this.renderer.antialias = true;
 
 	}
 
@@ -89,12 +88,9 @@ class App {
 
 		this.stats.update();
 		this.controls.update();
+
 		this.renderer.render( this.scene, this.camera );
-
-		requestAnimationFrame( this.update );
-
-		// TODO:
-		// this.renderer.setAnimationLoop( this.update );
+		this.renderer.setAnimationLoop( this.update );		
 
 	}
 
