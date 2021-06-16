@@ -1,90 +1,112 @@
 class Points {
-  constructor(grid) {
-    this.grid = grid;
-    this.total = grid.length;
-    this.radius = config.sizes.globe + config.sizes.globe * config.scale.points;
-    
-    this.sizeArray = [];
-    this.positionArray = [];
-    this.colorsArray = [];
 
-    groups.points = new THREE.Group();
-    groups.points.name = 'Points';
+	constructor ( grid ) {
 
-    this.create();
+		this.grid = grid;
+		this.total = grid.length;
+		this.radius = config.sizes.globe + config.sizes.globe * config.scale.points;
 
-    elements.globePoints = this.points;
-    groups.points.add(this.points);
-  }
+		this.sizeArray = [];
+		this.positionArray = [];
+		this.colorsArray = [];
 
-  create() {
-    const color = new THREE.Color();
+		groups.points = new THREE.Group();
+		groups.points.name = 'Points';
 
-    for(let i = 0; i < this.grid.length; i++) {
-      const {lat, lon} = this.grid[i];
-      const {x, y, z} = toSphereCoordinates(lat, lon, this.radius);
-      
-      this.positionArray.push(-x, -y, -z);
-      this.sizeArray.push(this.pointSize);
+		this.create();
 
-      color.set(this.pointColor);
-      color.toArray(this.colorsArray, i * 3);
-    }
+		elements.globePoints = this.points;
+		groups.points.add( this.points );
 
-    const positions = new Float32Array(this.positionArray);
-    const colors = new Float32Array(this.colorsArray);
-    const sizes = new Float32Array(this.sizeArray);
+	}
 
-    this.texture = new THREE.Texture(this.createTexture());
-    this.geometry = new THREE.BufferGeometry();
-    this.material = new THREE.PointsMaterial({
-      color: config.colors.globeDotColor,
-      size: config.sizes.globeDotSize
-    });
+	create () {
 
-    this.geometry.addAttribute('position', new THREE.BufferAttribute( positions, 3 ));
-    this.geometry.addAttribute('customColor', new THREE.BufferAttribute( colors, 3 ));
-    this.geometry.addAttribute('size', new THREE.BufferAttribute( sizes, 1 ));
-  
-    this.points = new THREE.Points( this.geometry,  this.material );
-  }
+		const color = new THREE.Color();
 
-  updateColor(col) {
-   const color = new THREE.Color();
+		for ( let i = 0; i < this.grid.length; i++ ) {
 
-    for(let i = 0; i < this.grid.length; i++) {
-      color.set(col);
-      color.toArray(this.colorsArray, i * 3);
-    } 
+			const { lat, lon } = this.grid[ i ];
+			const { x, y, z } = toSphereCoordinates( lat, lon, this.radius );
 
-    const colorsArray = new Float32Array(this.colorsArray);
-    const colors = new THREE.BufferAttribute( colorsArray, 3 );
-    this.geometry.attributes.customColor = colors;
-  }
+			this.positionArray.push( -x, -y, -z );
+			this.sizeArray.push( this.pointSize );
 
-  createTexture() {
-    const radius = 60;
-    const element = document.createElement('canvas');
-    const canvas = new fabric.Canvas(element);
+			color.set( this.pointColor );
+			color.toArray( this.colorsArray, i * 3 );
 
-    canvas.setHeight(radius);
-    canvas.setWidth(radius);
+		}
 
-    const rect = new fabric.Rect({
-      width: radius,
-      height: radius,
-      fill: 'white'
-    })
+		const positions = new Float32Array( this.positionArray );
+		const colors = new Float32Array( this.colorsArray );
+		const sizes = new Float32Array( this.sizeArray );
 
-    const circle = new fabric.Circle({
-      radius: radius / 2 - 2,
-      fill: 'blue',
-      left: 1,
-      top: 1
-    })
+		this.texture = new THREE.Texture(this.createTexture());
+		this.geometry = new THREE.BufferGeometry();
+		this.material = new THREE.PointsMaterial( {
 
-    canvas.add(rect);
-    canvas.add(circle);
-    return element;
-  }
-}
+			color: config.colors.globeDotColor,
+			size: config.sizes.globeDotSize,
+
+		} );
+
+		this.geometry.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+		this.geometry.setAttribute( 'customColor', new THREE.BufferAttribute( colors, 3 ) );
+		this.geometry.setAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) );
+
+		this.points = new THREE.Points( this.geometry,  this.material );
+
+	}
+
+	updateColor ( col ) {
+
+		const color = new THREE.Color();
+
+		for ( let i = 0; i < this.grid.length; i++ ) {
+
+			color.set( col );
+			color.toArray( this.colorsArray, i * 3 );
+
+		}
+
+		const colorsArray = new Float32Array( this.colorsArray );
+		const colors = new THREE.BufferAttribute( colorsArray, 3 );
+
+		this.geometry.attributes.customColor = colors;
+
+	}
+
+	createTexture () {
+
+		const radius = 60;
+		const element = document.createElement( 'canvas' );
+		const canvas = new fabric.Canvas( element );
+
+		canvas.setHeight( radius );
+		canvas.setWidth( radius );
+
+		const rect = new fabric.Rect( {
+
+			width: radius,
+			height: radius,
+			fill: 'white',
+
+		} );
+
+		const circle = new fabric.Circle( {
+
+			radius: radius / 2 - 2,
+			fill: 'blue',
+			left: 1,
+			top: 1
+
+		} );
+
+		canvas.add( rect );
+		canvas.add( circle );
+
+		return element;
+
+	}
+
+};

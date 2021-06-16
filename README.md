@@ -1,14 +1,15 @@
-# Globe - [Demo](https://nenadv91.github.io/Threejs-globe/)
-Particles globe with countries in threejs
+# Globe - [Demo](https://sermonis.github.io/three-particles-globe/)
+Particles globe with countries in Three.js.
 
-- Created with Three.js
+- Three.js
+- d3.js
 
 ### Preview
 ---
-![Preview](https://raw.githubusercontent.com/nenadV91/Threejs-globe/master/previews/preview.png?raw=true "Home preview 1")
+![Preview](./previews/preview.png)
 
 ## Author
-Nenad Vracar
+[Nenad Vracar](https://github.com/nenadV91)
 
 ## License
 Licensed under MIT
