@@ -33,29 +33,94 @@ class GeoJSON {
 
 		const materials = [
 
+			// https://threejs.org/examples/#webgl_lines_fat
+			// https://github.com/mrdoob/three.js/blob/master/examples/webgl_lines_fat.html
+
 			// new THREE.LineBasicMaterial( { color: 'blue', linewidth: 3, } ), // outer ring
-			new THREE.LineBasicMaterial( { color: 0xffaa00, linewidth: 3, } ), // outer ring
+			// new THREE.LineBasicMaterial( { color: 0xffaa00, linewidth: 3, transparent: true, opacity: 0 } ), // outer ring
+			new THREE.LineBasicMaterial( { color: 0xffaa00, linewidth: 3, transparent: true, opacity: 0 } ), // outer ring
+			// new THREE.MeshBasicMaterial( { color: 0xffaa00, linewidth: 3, } ), // outer ring
 			// new THREE.LineDashedMaterial( { color: 0xffaa00, dashSize: 3, gapSize: 1 } ), // outer ring
 			new THREE.LineBasicMaterial( { color: 'green', linewidth: 3, } ), // inner holes
 
 		];
 
+		// const vectorArray = [];
+
 		this.json.features.forEach( ( { properties, geometry } ) => {
 
+			// console.log( geometry );
+			// console.log( new THREE.GeoJsonGeometry( geometry, this.radius ) );
+			// console.log( new THREE.GeoJsonGeometry( geometry, this.radius ).toJSON() );
+
+			// const g = new THREE.GeoJsonGeometry( geometry, this.radius );
+
+			// console.log( g.getAttribute( 'position' ) );
+			// console.log( g.toNonIndexed() );
+			// g.toNonIndexed()
+
+			// const vertices = g.getAttribute( 'position' );
+			// console.log( new THREE.BufferAttribute( vertices, 3 ) );
+
+			// console.log( new THREE.BufferAttribute( g.getAttribute( 'position' ) ) );
+			// console.log( g.getAttribute( 'position' ) );
+			// console.log( g.toNonIndexed() );
+			// const s = new THREE.ShapeGeometry();
+			// g.computeVertexNormals();
+			// console.log( s.fromGeometry(g.toNonIndexed()) );
+
+			// fromGeometry
+			// THREE.GeometryUtils.center(geometry);
+
+			// copyArray: ƒ (a)
+			// copyAt: ƒ (a,b,c)
+			// copyColorsArray: ƒ (a)
+			// copyIndicesArray: ƒ ()
+			// copyVector2sArray: ƒ (a)
+			// copyVector3sArray: ƒ (a)
+			// copyVector4sArray:
+
+			// const position = g.attributes.position;
+			// const vector = new THREE.Vector3();
+			// // const vector = new THREE.Vector2();
+			//
+			// // vector.fromBufferAttribute(position, i);
+			// vector.fromBufferAttribute(position, 0); // 0 -?
+			//
+			// for ( let i = 0, length = position.length; i < length; i ) {
+			//
+			// 	// vectorArray.push( vector.fromBufferAttribute( position, i ) );
+			// 	vectorArray.push( vector.fromBufferAttribute( position, i ) );
+			//
+			// };
+			// gjg.computeVertexNormals();
+			// console.log( position.length, position );
+			// console.log( vector );
+
+			// const shapeGeometry = new THREE.ShapeGeometry();
+			// console.log( shapeGeometry.fromGeometry(gjg) );
+
+			// fromDirectGeometry: ƒ (a)
+			// fromGeometry: ƒ (a)
+
 			lineObjs.push( new THREE.LineSegments(
+			// lineObjs.push( new THREE.Mesh(
 				new THREE.GeoJsonGeometry( geometry, this.radius ),
 				materials
 			) );
 
 		} );
 
+		// console.log( vectorArray );
+		// console.log( lineObjs );
+
 		lineObjs.forEach( obj => groups.contours.add( obj ) );
 
 		// lineObjs.forEach( obj => {
 		//
 		// 	// obj.rotateY( THREE.Math.degToRad( -90 ) );
-		// 	// obj.computeLineDistances();
-		// 	groups.geojson.add( obj );
+		// 	obj.computeLineDistances();
+		// 	groups.contours.add( obj );
 		//
 		// } );
 

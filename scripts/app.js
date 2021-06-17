@@ -1,6 +1,6 @@
 class App {
 
-	constructor( { animate, setup, preload } ) {
+	constructor ( { animate, setup, preload } ) {
 
 		this.preload = preload;
 		this.animate = animate;
@@ -13,9 +13,11 @@ class App {
 	init = async () => {
 
 		this.initScene();
+		// this.initRaycaster();
 		this.initRenderer();
 		this.initCamera();
 		this.initControls();
+		this.initRaycaster();
 		this.initStats();
 
 		if ( this.preload ) {
@@ -62,6 +64,13 @@ class App {
 
 	}
 
+	initRaycaster = () => {
+
+		this.raycaster = new THREE.Raycaster();
+		this.pointer = new THREE.Vector2();
+
+	}
+
 	initStats = () => {
 
 		this.stats = new Stats();
@@ -89,8 +98,43 @@ class App {
 		this.stats.update();
 		this.controls.update();
 
+		// Update the picking ray with the camera and mouse position.
+		this.raycaster.setFromCamera( this.pointer, this.camera );
+
+		// Calculate objects intersecting the picking ray.
+		const intersects = this.raycaster.intersectObjects( this.scene.children, true );
+		// const intersects = this.raycaster.intersectObject( this.scene );
+
+		// if ( intersects.length && intersects[ 0 ].object.isMesh && intersects[0].object.type == 'GeoJsonGeometry' ) {
+		// if ( intersects.length && intersects[ 0 ].object.isMesh ) {
+		// if ( intersects.length && intersects[ 0 ].object.isGroup && intersects[ 0 ].object.name == 'geoJSON' ) {
+		// if ( intersects.length && intersects[ 0 ].object.type == 'LineSegments' ) {
+		if ( intersects.length && intersects[ 0 ].object.isLineSegments ) {
+
+			const object = intersects[ 0 ].object;
+
+			// console.log( 'intersects', intersects );
+			// console.log( 'object', object );
+			console.log( 'object.type', object.type, object );
+			// object.material[0].color.set( 0xff0000 );
+			object.scale.multiplyScalar( 1.2 );
+			// object.material[0].opacity = 1;
+			// const mat = object.material[0].copy();
+			// mat.opacity = 1;
+			// object.material[0] = mat;
+
+		}
+
+		// for ( let i = 0; i < intersects.length; i ++ ) {
+		//
+		// 	// console.log( 'intersects', intersects )
+		//
+		// 	// intersects[ i ].object.material.color.set( 0xff0000 );
+		//
+		// }
+
 		this.renderer.render( this.scene, this.camera );
-		this.renderer.setAnimationLoop( this.update );		
+		this.renderer.setAnimationLoop( this.update );
 
 	}
 
@@ -106,6 +150,19 @@ class App {
 		this.camera.aspect = window.innerWidth / window.innerHeight;
 		this.camera.updateProjectionMatrix();
 		this.renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	handlePointerMove = ( e ) => {
+
+		if ( !!this.pointer ) {
+
+			// console.log( 'handlePointerMove', e );
+
+			this.pointer.x = ( e.clientX / window.innerWidth ) * 2 - 1;
+			this.pointer.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
+
+		}
 
 	}
 

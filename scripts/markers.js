@@ -32,8 +32,8 @@ class Markers {
 				const lat = +country.latitude;
 				const lng = +country.longitude;
 
-				const cords = toSphereCoordinates( lat, lng, this.radius );
-				const marker = new Marker( this.markerMaterial, this.markerGeometry, country.name, cords );
+				const coords = toSphereCoordinates( lat, lng, this.radius );
+				const marker = new Marker( this.markerMaterial, this.markerGeometry, country.name, coords );
 
 				elements.markers.push( marker );
 

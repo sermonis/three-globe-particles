@@ -3,6 +3,9 @@ const app = new App( { setup, animate, preload } );
 window.onload = app.init;
 window.onresize = app.handleResize;
 
+document.addEventListener( 'pointermove', app.handlePointerMove );
+// document.pointermove = app.handlePointerMove;
+
 const loader = new THREE.TextureLoader();
 const controls = {};
 const data = {};
