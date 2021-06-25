@@ -53,6 +53,7 @@ class App {
 
 		this.ratio = window.innerWidth / window.innerHeight;
 		this.camera = new THREE.PerspectiveCamera( 60, this.ratio, 0.1, 10000 );
+
 		this.camera.lookAt( this.scene.position );
 		this.camera.position.set( 0, 15, 30 );
 
@@ -61,6 +62,20 @@ class App {
 	initControls = () => {
 
 		this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
+
+		this.controls.enablePan = false;
+		this.controls.enableZoom = false;
+
+		// this.controls.enableDamping = true;
+
+		// controls.minDistance = 8;
+		// controls.maxDistance = 50;
+		//
+		this.controls.autoRotate = true; // turn this guy to true for a spinning camera
+		this.controls.autoRotateSpeed = 0.08; // 30
+
+		// controls.target.set( 0.5, 8, 2.5 );
+		this.controls.update();
 
 	}
 
