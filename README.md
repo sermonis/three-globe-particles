@@ -1,4 +1,4 @@
-# Globe - [Demo](https://sermonis.github.io/three-particles-globe/)
+# Globe - [Demo](https://sermonis.github.io/three-globe-particles/)
 Particles globe with countries in Three.js.
 
 - Three.js
